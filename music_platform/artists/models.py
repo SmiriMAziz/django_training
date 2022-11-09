@@ -14,6 +14,10 @@ class Artist(models.Model):
         blank=False,
         null=False,
     )
+    approved_albums = models.IntegerField(
+        default=0,
+        blank=True,
+    )
 
     def __str__(self):
         return self.Stage_name

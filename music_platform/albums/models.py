@@ -24,6 +24,20 @@ class Album(models.Model):
         blank=False,
         null=False,
     )
+    is_approved = models.BooleanField(
+        blank=True,
+        default=False,
+    )
+
+    def save(self):
+        super().save()
+        self.upadetecount()
+
+    def upadetecount(self):
+
+        self.artist.approved_albums = self.artist.album_set.filter(
+            is_approved=True).count()
+        self.artist.save()
 
     def __str__(self):
         return self.name
