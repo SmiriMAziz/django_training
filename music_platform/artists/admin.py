@@ -12,6 +12,7 @@ class AlbumInline(admin.StackedInline):
 @admin.register(Artist)
 class Show(admin.ModelAdmin):
     list_display = ('Stage_name', 'approved_albums')
+    ordering = ['-approved_albums']
     inlines = [
         AlbumInline,
     ]

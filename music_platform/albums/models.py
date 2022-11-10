@@ -1,10 +1,12 @@
 from artists.models import Artist
 from django.db import models
+from model_utils.models import TimeStampedModel
+
 
 # Create your models here.
 
 
-class Album(models.Model):
+class Album(TimeStampedModel):
 
     artist = models.ForeignKey(
         Artist,
@@ -15,8 +17,8 @@ class Album(models.Model):
         max_length=200,
         blank=True,
     )
-    creation_datetime = models.DateTimeField(auto_now_add=True)
-    release_datetime = models.DateTimeField(
+
+    release_datetime = models.DateField(
         blank=False,
         null=False,
     )

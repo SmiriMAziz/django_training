@@ -19,4 +19,4 @@ class MyForm(forms.ModelForm):
 @admin.register(Album)
 class Readonly(admin.ModelAdmin):
     form = MyForm
-    readonly_fields = ["creation_datetime"]
+    readonly_fields = ["created"]
