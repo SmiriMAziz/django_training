@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import AlbumForm
-from .models import Album
+from .models import Album, Song
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -35,3 +35,17 @@ class CreateAlbum(LoginRequiredMixin, TemplateView):
                 album_1.save()
 
             return HttpResponseRedirect('/admin/')
+
+
+class GenerateImages(TemplateView):
+
+    initial = {'key': 'value'}
+    template_name = 'images.html'
+
+    def get(self, request, *args, **kwargs):
+
+        songs = Song.objects.all()
+        print(songs)
+        for song in songs:
+            print(song.song_img)
+        return render(request, self.template_name, {'songs': songs})

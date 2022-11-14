@@ -4,15 +4,8 @@ from .models import Artist
 # Register your models here.
 
 
-class AlbumInline(admin.StackedInline):
-    model = Album
-    extra = 0
-
-
 @admin.register(Artist)
 class Show(admin.ModelAdmin):
     list_display = ('Stage_name', 'approved_albums')
     ordering = ['-approved_albums']
-    inlines = [
-        AlbumInline,
-    ]
+    readonly_fields = ['approved_albums']
