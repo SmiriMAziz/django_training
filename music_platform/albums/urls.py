@@ -1,8 +1,8 @@
 from django.urls import path
 
-from . import views
+from .views import CreateAlbum
 
 
 urlpatterns = [
-    path('', views.create_album),
+    path('create/', CreateAlbum.as_view()),
 ]

@@ -4,17 +4,25 @@ from django.http import HttpResponse
 from django.http import Http404
 from .forms import ArtistForm
 from .models import Artist
-
+from django.views.generic import TemplateView
 from albums.models import Album
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-def get_artist(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = ArtistForm(request.POST)
+class CreateArtist(LoginRequiredMixin, TemplateView):
 
-        # check whether it's valid:
+    login_url = '/signin/'
+    redirect_field_name = 'artists'
+    initial = {'key': 'value'}
+    form = ArtistForm
+    template_name = 'artists.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form(request.POST)
         if form.is_valid():
 
             stage_name = form.cleaned_data['stage_name']
@@ -28,14 +36,13 @@ def get_artist(request):
 
             return HttpResponseRedirect('/admin/')
 
-    else:
-        form = ArtistForm()
 
-    return render(request, 'artists.html', {'form': form})
+class GenerateArtists(TemplateView):
 
+    initial = {'key': 'value'}
+    template_name = 'allartists.html'
 
-def get_all(request):
-
-    artists = Artist.objects.all()
-    albums = Album.objects.all()
-    return render(request, 'allartists.html', {'albums': albums, 'artists': artists})
+    def get(self, request, *args, **kwargs):
+        artists = Artist.objects.all()
+        albums = Album.objects.all()
+        return render(request, self.template_name, {'albums': albums, 'artists': artists})

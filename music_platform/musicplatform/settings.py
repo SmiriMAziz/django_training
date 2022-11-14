@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'artists.apps.ArtistsConfig',
     'albums.apps.AlbumsConfig',
+    'authentication.apps.AuthenticationConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +58,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / 'artists' / 'templates'
+            BASE_DIR / 'artists' / 'templates',
+            BASE_DIR / 'albums' / 'templates',
+            BASE_DIR / 'authentication' / 'templates'
+
         ],
         'APP_DIRS': True,
         'OPTIONS': {

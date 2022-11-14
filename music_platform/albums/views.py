@@ -2,18 +2,25 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import AlbumForm
 from .models import Album
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-def create_album(request):
+class CreateAlbum(LoginRequiredMixin, TemplateView):
 
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = AlbumForm(request.POST)
+    login_url = '/signin/'
+    redirect_field_name = 'artists'
+    initial = {'key': 'value'}
+    form = AlbumForm
+    template_name = 'albums.html'
 
-        # check whether it's valid:
+    def get(self, request, *args, **kwargs):
+        form = self.form(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form(request.POST)
         if form.is_valid():
-
             artist = form.cleaned_data['artist']
             name = form.cleaned_data['name']
             release_datetime = form.cleaned_data['release_datetime']
@@ -26,11 +33,5 @@ def create_album(request):
                 album_1 = Album(artist=artist, name=name,
                                 release_datetime=release_datetime, cost=cost)
                 album_1.save()
-                print('ok')
 
             return HttpResponseRedirect('/admin/')
-
-    else:
-        form = AlbumForm()
-
-    return render(request, 'albums.html', {'form': form})
