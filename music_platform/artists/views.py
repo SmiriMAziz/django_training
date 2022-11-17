@@ -14,14 +14,12 @@ from .serializers import ArtistSerializer
 from rest_framework.views import APIView
 
 
-class CreateArtist(LoginRequiredMixin, APIView):
-
-    login_url = '/signin/'
-    redirect_field_name = 'artists'
+class CreateArtist(APIView):
 
     def post(self, request, format=None):
         serializer = ArtistSerializer(data=request.data)
         if serializer.is_valid():
+
             serializer.save()
         return Response()
 

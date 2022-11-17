@@ -6,10 +6,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class CreateAlbum(LoginRequiredMixin, TemplateView):
+class CreateAlbum(TemplateView):
 
-    login_url = '/signin/'
-    redirect_field_name = 'artists'
     initial = {'key': 'value'}
     form = AlbumForm
     template_name = 'albums.html'

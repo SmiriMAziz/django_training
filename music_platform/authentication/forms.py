@@ -1,6 +1,6 @@
 from django import forms
 
 
-class SigninForm(forms.Form):
-    email = forms.CharField()
-    password = forms.CharField()
+# class SigninForm(forms.Form):
+#     email = forms.CharField()
+#     password = forms.CharField()
