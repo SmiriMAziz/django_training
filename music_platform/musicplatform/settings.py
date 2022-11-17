@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'django_extensions',
-    'api',
     'rest_framework.authtoken',
     'knox',
 ]
