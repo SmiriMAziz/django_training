@@ -49,7 +49,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta():
         model = User
-        fields = ['username', 'email', 'password', 'bio']
+        fields = ['username', 'email', 'password', 'confirm_password',  'bio']
         validators = [validate_password]
 
 
